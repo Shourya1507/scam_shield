@@ -4,6 +4,10 @@ to execute the demo, or import GuardianAgent for programmatic use.
 """
 import sys
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 sys.path.insert(0, os.path.dirname(__file__))
 

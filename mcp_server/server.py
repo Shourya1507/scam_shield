@@ -22,6 +22,10 @@ import sys
 import os
 import json
 from typing import Any
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # ── Path bootstrap (works both as a module and when run directly) ─────────────
 _HERE = os.path.dirname(os.path.abspath(__file__))

@@ -5,7 +5,7 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "python -m cli.scamshield_cli serve-webhook --type email --port 8080",
+    "startCommand": "python -m cli.scamshield_cli serve-webhook --type email",
     "restartPolicyType": "ON_FAILURE",
     "numReplicas": 1
   }

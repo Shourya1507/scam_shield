@@ -26,6 +26,10 @@ import os
 import sys
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # ── Path bootstrap ────────────────────────────────────────────────────────────
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
@@ -203,6 +207,22 @@ def cmd_serve_webhook(args) -> None:
     class _Handler(BaseHTTPRequestHandler):
         def log_message(self, fmt, *a):
             pass  # silence default access log
+
+        def do_GET(self):
+            if self.path in ("/", "/health", "/healthz"):
+                resp_body = b'{"status":"healthy"}'
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(resp_body)))
+                self.end_headers()
+                self.wfile.write(resp_body)
+            else:
+                resp_body = b'{"error":"not_found"}'
+                self.send_response(404)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(resp_body)))
+                self.end_headers()
+                self.wfile.write(resp_body)
 
         def do_POST(self):
             if self.path != "/webhook":
