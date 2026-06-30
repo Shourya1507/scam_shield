@@ -32,6 +32,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Optional
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # ── Path bootstrap ────────────────────────────────────────────────────────────
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
@@ -217,6 +221,11 @@ def cmd_serve_webhook(args) -> None:
         text: str
         sender: Optional[str] = None
 
+    @app.get("/health")
+    @app.get("/healthz")
+    async def health_check():
+        return {"status": "healthy"}
+
     @app.post("/webhook")
     @app.post("/api/scan")
     async def scan(request: ScanRequest, req: Request):
@@ -305,7 +314,7 @@ def build_parser() -> argparse.ArgumentParser:
     # ── serve-webhook ─────────────────────────────────────────────────────────
     wh = sub.add_parser("serve-webhook", help="Start a webhook HTTP endpoint")
     wh.add_argument("--type", choices=["call", "email", "financial"], required=True)
-    wh.add_argument("--port", type=int, default=8080)
+    wh.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8080)))
     wh.add_argument("--guardian-contact", default="+1-555-0100", dest="guardian_contact")
 
     return p

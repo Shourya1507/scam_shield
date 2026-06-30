@@ -39,7 +39,5 @@ ENV PYTHONUNBUFFERED=1 \
 # 8080: Webhook ingestion endpoint
 EXPOSE 8000 8080
 
-# ── Default command: run the MCP stdio server ─────────────────────────────────
-# For the webhook server, override with:
-#   docker run scamshield python -m cli.scamshield_cli serve-webhook --type email --port 8080
-CMD ["python", "-m", "mcp_server.server"]
+# ── Default command: run the webhook server by default ───────────────────────
+CMD ["python", "-m", "cli.scamshield_cli", "serve-webhook", "--type", "email"]
