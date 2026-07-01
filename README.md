@@ -17,7 +17,7 @@ scamshield-ai/
 ├── Dockerfile
 ├── requirements.txt
 ├── setup.py
-├── main.py
+├── run_demo.py
 ├── agents/
 │   ├── guardian_agent.py          # Orchestrator + Google ADK wrapper
 │   ├── call_protection_agent.py
@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 # 2. Run the demo (no API key required)
 cd scamshield-ai
-python main.py
+python run_demo.py
 ```
 
 ## CLI Usage
