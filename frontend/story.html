@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScamShield AI Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --accent-primary: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --accent-rose: #f43f5e;
+      --accent-emerald: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #presentation {
+      position: relative;
+      width: 1080px;
+      height: 720px;
+      background: radial-gradient(circle at 80% 20%, #1e1b4b 0%, #0f172a 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slides Container */
+    .slides-container {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease-in-out, visibility 0.8s;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-title {
+      font-size: 48px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 40%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transform: translateY(20px);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active .slide-title {
+      transform: translateY(0);
+    }
+
+    .slide-subtitle {
+      font-size: 20px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      font-weight: 300;
+      transform: translateY(20px);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+    }
+
+    .slide.active .slide-subtitle {
+      transform: translateY(0);
+    }
+
+    /* Grid layouts */
+    .slide-layout-split {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 50px;
+      align-items: center;
+      height: 100%;
+    }
+
+    /* Content Cards */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animations & Indicators */
+    .progress-bar-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 10;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-primary), #818cf8);
+      transition: width 0.1s linear;
+    }
+
+    /* Specific Slide Styles */
+    /* Slide 1: Welcome */
+    .hero-center {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-logo {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, var(--accent-primary), #818cf8);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      box-shadow: 0 0 40px var(--accent-glow);
+      animation: pulse 3s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(99, 102, 241, 0.15); }
+      50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(99, 102, 241, 0.3); }
+    }
+
+    /* Slide 2: The Threat */
+    .phone-mockup {
+      width: 100%;
+      max-width: 320px;
+      border: 6px solid #334155;
+      border-radius: 36px;
+      background: #000;
+      padding: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      margin: 0 auto;
+    }
+
+    .phone-screen {
+      background: #111827;
+      border-radius: 24px;
+      padding: 16px;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sms-bubble {
+      background: #1f2937;
+      border-radius: 16px;
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #e5e7eb;
+      position: relative;
+      animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .sms-bubble.urgent {
+      border-left: 4px solid var(--accent-rose);
+    }
+
+    .sms-bubble .sender {
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--accent-rose);
+      margin-bottom: 4px;
+    }
+
+    /* Slide 3: Multi-Agent Defense */
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pipeline-node {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 14px;
+      transform: translateX(-30px);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s;
+    }
+
+    .slide.active .pipeline-node:nth-child(1) { transform: translateX(0); opacity: 1; transition-delay: 0.2s; }
+    .slide.active .pipeline-node:nth-child(2) { transform: translateX(0); opacity: 1; transition-delay: 0.4s; }
+    .slide.active .pipeline-node:nth-child(3) { transform: translateX(0); opacity: 1; transition-delay: 0.6s; }
+
+    .pipeline-node .badge {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Slide 4: Real-time Guardian Alerts */
+    .alert-banner {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-top: 20px;
+      animation: pulseAlert 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseAlert {
+      0%, 100% { border-color: rgba(244, 63, 94, 0.2); background: rgba(244, 63, 94, 0.08); }
+      50% { border-color: rgba(244, 63, 94, 0.4); background: rgba(244, 63, 94, 0.15); }
+    }
+
+    /* Slide 5: The Ledger */
+    .ledger-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ledger-block {
+      background: rgba(16, 185, 129, 0.03);
+      border: 1px dashed rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .ledger-block.verified {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .ledger-block .hash {
+      color: var(--accent-emerald);
+      font-weight: bold;
+    }
+
+    /* Slide 6: Peace of Mind */
+    .mascot-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      position: relative;
+    }
+
+    .floating-mascot {
+      width: 200px;
+      height: 200px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(3deg); }
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="presentation">
+  <div class="slides-container">
+    
+    <!-- Slide 1: Welcome -->
+    <div class="slide active hero-center">
+      <div class="hero-logo">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h1 class="slide-title" style="font-size: 60px;">ScamShield AI</h1>
+      <p class="slide-subtitle" style="text-align: center; max-width: 500px;">
+        An advanced multi-agent defense system built to protect families and vulnerable users from digital fraud.
+      </p>
+    </div>
+
+    <!-- Slide 2: The Threat -->
+    <div class="slide">
+      <div class="slide-layout-split">
+        <div>
+          <h2 class="slide-title">The Silent Threat</h2>
+          <p class="slide-subtitle">
+            Phishing scams, fake urgent notifications, and fraudulent wire transfers target thousands daily.
+          </p>
+          <div class="glass-card">
+            <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--accent-rose);">Sophisticated impersonations</h3>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+              Scammers disguise themselves as trusted bank support agents or IT support departments, applying extreme urgency.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="phone-mockup">
+            <div class="phone-screen">
+              <div style="font-size: 11px; text-align: center; color: var(--text-muted);">Incoming Message</div>
+              <div class="sms-bubble urgent">
+                <div class="sender">⚠️ Bank Alert</div>
+                We detected unauthorized activity on your account. Download TeamViewer now to prevent total account suspension.
+              </div>
+              <div class="sms-bubble urgent" style="animation-delay: 1.5s; opacity: 0;">
+                <div class="sender">🔒 Security Support</div>
+                Enter your 2FA OTP code immediately to secure your debit card from unauthorized withdrawals.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Multi-Agent Defense -->
+    <div class="slide">
+      <div class="slide-layout-split">
+        <div>
+          <h2 class="slide-title">Multi-Agent Intelligence</h2>
+          <p class="slide-subtitle">
+            A network of specialized AI agents working together to detect threats, inspect links, and prevent scams.
+          </p>
+          <div class="glass-card">
+            <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--accent-primary);">Deep Signal Verification</h3>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+              By combining keyword analysis with advanced Gemini reasoning, ScamShield flags credential harvesting instantly.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="pipeline">
+            <div class="pipeline-node">
+              <span class="badge" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">Gateway</span>
+              <div>
+                <strong style="display:block;">InputSanitizer</strong>
+                <span style="font-size: 12px; color: var(--text-muted);">Redacts personal PII & blocks injection attacks</span>
+              </div>
+            </div>
+            <div class="pipeline-node">
+              <span class="badge" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e;">Analyzer</span>
+              <div>
+                <strong style="display:block;">PhishingEmailAgent</strong>
+                <span style="font-size: 12px; color: var(--text-muted);">Flagged: "AnyDesk" & "OTP Request"</span>
+              </div>
+            </div>
+            <div class="pipeline-node">
+              <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">Verdict</span>
+              <div>
+                <strong style="display:block; color: var(--accent-rose);">Threat Score: 85 (HIGH RISK)</strong>
+                <span style="font-size: 12px; color: var(--text-muted);">Automatically blocked and recorded</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Real-time Guardian Alerts -->
+    <div class="slide">
+      <div class="slide-layout-split">
+        <div>
+          <h2 class="slide-title">Real-time Safety Alerting</h2>
+          <p class="slide-subtitle">
+            ScamShield immediately alerts family members or guardians when a high-risk scam is detected.
+          </p>
+          <div class="glass-card">
+            <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--accent-primary);">Keeping Loved Ones Safe</h3>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+              Automated Twilio integrations ship detailed logs and trigger quick action alerts directly to the designated guardian's device.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="phone-mockup">
+            <div class="phone-screen" style="background: #0f172a; justify-content: center;">
+              <div style="font-size: 11px; text-align: center; color: var(--text-muted); margin-bottom: 12px;">Guardian Notification</div>
+              <div class="alert-banner">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div>
+                  <strong style="display:block; color: var(--text-main); font-size: 13px;">SCAM DETECTED</strong>
+                  <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.3;">
+                    ScamShield flagged an impersonation call targeting Mom. Threat Score: 85.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5: The Immutable Ledger -->
+    <div class="slide">
+      <div class="slide-layout-split">
+        <div>
+          <h2 class="slide-title">Tamper-Evident Security</h2>
+          <p class="slide-subtitle">
+            Every transaction, scan, and warning is permanently logged into an audit trail secured by cryptographic hashes.
+          </p>
+          <div class="glass-card">
+            <h3 style="font-size: 18px; margin-bottom: 8px; color: var(--accent-emerald);">Cryptographic Verification</h3>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+              Using a block-hash chain algorithm, any tampering of logs is instantly detected and blocked. True transparency.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="ledger-flow">
+            <div class="ledger-block verified">
+              <div><strong>Block #12</strong> (System Init)</div>
+              <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Hash: <span class="hash">00fa82...df82</span></div>
+              <div style="font-size: 10px; color: var(--text-muted);">Prev: 000000...0000</div>
+            </div>
+            <div class="ledger-block verified">
+              <div><strong>Block #13</strong> (Scan Complete)</div>
+              <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Hash: <span class="hash">9b821a...bc5a</span></div>
+              <div style="font-size: 10px; color: var(--text-muted);">Prev: <span style="color: var(--text-muted);">00fa82...df82</span></div>
+            </div>
+            <div style="text-align: center; color: var(--accent-emerald); font-size: 12px; font-weight: bold;">
+              ✓ Hash Chain Integrity Verified
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6: Peace of Mind -->
+    <div class="slide hero-center">
+      <div class="mascot-container">
+        <img class="floating-mascot" src="detective_mascot.png" alt="Detective Mascot">
+      </div>
+      <h2 class="slide-title" style="font-size: 40px; margin-top: 24px;">Simplifying Safety.</h2>
+      <p class="slide-subtitle" style="text-align: center; max-width: 500px;">
+        ScamShield AI works silently in the background, giving families absolute peace of mind.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const progressBar = document.getElementById('progressBar');
+  let currentSlide = 0;
+  const slideDuration = 6000; // 6 seconds per slide
+  let startTime = Date.now();
+
+  function updateProgressBar() {
+    const elapsed = Date.now() - startTime;
+    const percentage = Math.min(100, (elapsed / slideDuration) * 100);
+    progressBar.style.width = percentage + '%';
+
+    if (elapsed >= slideDuration) {
+      nextSlide();
+    } else {
+      requestAnimationFrame(updateProgressBar);
+    }
+  }
+
+  function nextSlide() {
+    slides[currentSlide].classList.remove('active');
+    
+    // If it was Slide 2 (The Threat), we make sure to reset the delayed opacity elements
+    const delayedSMS = slides[1].querySelector('.sms-bubble:nth-child(3)');
+    if (delayedSMS) delayedSMS.style.opacity = '0';
+
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+    
+    // If we transitioned to Slide 2, trigger the fake delayed text message animation
+    if (currentSlide === 1) {
+      setTimeout(() => {
+        const delayedSMS = slides[1].querySelector('.sms-bubble:nth-child(3)');
+        if (delayedSMS) {
+          delayedSMS.style.opacity = '1';
+          delayedSMS.style.animation = 'slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+        }
+      }, 2000);
+    }
+
+    startTime = Date.now();
+    requestAnimationFrame(updateProgressBar);
+  }
+
+  // Start presentation loop
+  requestAnimationFrame(updateProgressBar);
+</script>
+
+</body>
+</html>
