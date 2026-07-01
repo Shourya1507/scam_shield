@@ -146,12 +146,7 @@ plain rule-based `GuardianAgent` when `google-adk` is not installed.
 See [.env.example](.env.example) for the full list.
 
 Key variables:
-- `ANTHROPIC_API_KEY` — enable Claude-backed reasoning
 - `GOOGLE_API_KEY` — enable Gemini-backed ADK planning
-- `SIEM_WEBHOOK_URL` + `SIEM_API_KEY` — ship audit logs to your SIEM
-- `WEBHOOK_SECRET` — HMAC secret for the webhook endpoint
-- `TWILIO_*` / `SENDGRID_API_KEY` — production notification delivery
-
 ## Architecture
 
 See [docs/architecture.md](docs/architecture.md) for the full system diagram,

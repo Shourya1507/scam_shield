@@ -1,0 +1,20 @@
+# Ignore all Python backend files - Vercel only serves the React frontend
+agents/
+cli/
+mcp_server/
+tests/
+docs/
+demo/
+*.py
+*.cfg
+*.yaml
+requirements*.txt
+setup.py
+Dockerfile
+render.yaml
+main.py
+.env*
+*.log
+__pycache__/
+*.pyc
+.pytest_cache/

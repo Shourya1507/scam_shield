@@ -1,116 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScamShield AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <img src="/static/detective_mascot.png" alt="Detective Mascot" class="mascot-icon">
-    <div class="app-container">
-        <header class="app-header">
-            <div class="logo">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L3 6V12C3 17.5 7.1 22.6 12 24C16.9 22.6 21 17.5 21 12V6L12 2Z" fill="url(#paint0_linear)"/>
-                    <path d="M11 16H13V18H11V16ZM11 7H13V14H11V7Z" fill="white"/>
-                    <defs>
-                        <linearGradient id="paint0_linear" x1="12" y1="2" x2="12" y2="24" gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#FF3366"/>
-                            <stop offset="1" stop-color="#FF9933"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-                <h1>ScamShield AI</h1>
-            </div>
-            <p class="subtitle">Multi-Agent Scam Detection Platform</p>
-        </header>
-
-        <main class="main-content">
-            <div class="input-panel glass-card">
-                <h2>Analyze Content</h2>
-                <form id="scanForm">
-                    <div class="form-group">
-                        <label for="inputType">Input Type</label>
-                        <select id="inputType" required>
-                            <option value="email">Email</option>
-                            <option value="call">Call Transcript</option>
-                            <option value="financial">Financial Message</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" id="senderGroup">
-                        <label for="sender">Sender (Optional)</label>
-                        <input type="text" id="sender" placeholder="e.g. support@amaz0n.com">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="text">Message Content</label>
-                        <textarea id="text" rows="6" required placeholder="Paste the suspicious message or transcript here..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-primary" id="scanBtn">
-                        <span class="btn-text">Run Analysis</span>
-                        <div class="spinner hidden"></div>
-                    </button>
-                </form>
-            </div>
-
-            <div class="result-panel glass-card hidden" id="resultPanel">
-                <div class="result-header">
-                    <h2>Analysis Report</h2>
-                    <span class="badge" id="verdictBadge">PENDING</span>
-                </div>
-                
-                <div class="score-container">
-                    <div class="score-circle">
-                        <svg viewBox="0 0 36 36" class="circular-chart">
-                            <path class="circle-bg"
-                                d="M18 2.0845
-                                a 15.9155 15.9155 0 0 1 0 31.831
-                                a 15.9155 15.9155 0 0 1 0 -31.831"
-                            />
-                            <path class="circle" id="scoreCircle"
-                                stroke-dasharray="0, 100"
-                                d="M18 2.0845
-                                a 15.9155 15.9155 0 0 1 0 31.831
-                                a 15.9155 15.9155 0 0 1 0 -31.831"
-                            />
-                            <text x="18" y="20.35" class="percentage" id="scoreText">0</text>
-                        </svg>
-                    </div>
-                    <div class="score-info">
-                        <h3 id="verdictText">Evaluating...</h3>
-                        <p class="score-desc">Overall Risk Score</p>
-                    </div>
-                </div>
-
-                <div class="details-grid">
-                    <div class="detail-box">
-                        <h4>Flagged Categories</h4>
-                        <ul id="categoriesList" class="tag-list">
-                            <!-- Categories populated here -->
-                        </ul>
-                    </div>
-                    
-                    <div class="detail-box">
-                        <h4>Memory Summary</h4>
-                        <p id="memoryStats" class="stat-text">Checking history...</p>
-                        <p id="memoryBoost" class="boost-text hidden">Repeat Offender Boost Applied!</p>
-                    </div>
-                </div>
-                
-                <div class="notification-banner hidden" id="notificationBanner">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    <div class="notif-text">
-                        <strong>Guardian Notified</strong>
-                        <p id="notifDetails">Alert sent to +1-555-0100</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-    <script src="/static/app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScamShield AI — Multi-Agent Scam Protection</title>
+    <meta name="description" content="An advanced multi-agent scam protection system featuring GuardianAgent, call transcript, phishing email, and financial scam analysis, backed by a tamper-evident audit ledger." />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
